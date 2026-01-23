@@ -1,0 +1,8 @@
+# Private key - DO NOT COMMIT
+key.pem
+
+# macOS
+.DS_Store
+
+# Build artifacts kept in releases
+*.zip

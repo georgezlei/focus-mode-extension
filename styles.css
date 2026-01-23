@@ -1,0 +1,5 @@
+/* Hide "Search the web" menu items by aria-label */
+.goog-menuitem[aria-label*="Search the web" i],
+.goog-menuitem[aria-label*="search the web" i] {
+  display: none !important;
+}
