@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Mode for Google Workspace</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 { color: #4285f4; }
+    .download-btn {
+      display: inline-block;
+      background: #4285f4;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      margin: 20px 0;
+    }
+    .download-btn:hover { background: #3367d6; }
+    table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+    th { background: #f5f5f5; }
+    code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <h1>Focus Mode for Google Workspace</h1>
+  <p>A Chrome extension that hides web image search options in Google Docs, Sheets, and Slides to help maintain focus and reduce distractions.</p>
+
+  <a href="focus-mode.crx" class="download-btn">Download Extension (v1.0.0)</a>
+
+  <h2>What it blocks</h2>
+  <table>
+    <tr><th>App</th><th>Location</th><th>Blocked Item</th></tr>
+    <tr><td>Google Docs</td><td>Insert &gt; Image menu</td><td>"Search the web"</td></tr>
+    <tr><td>Google Sheets</td><td>Insert &gt; Image dialog</td><td>"Google Images" tab</td></tr>
+    <tr><td>Google Slides</td><td>Insert &gt; Image menu</td><td>"Stock and web"</td></tr>
+  </table>
+
+  <h2>Installation</h2>
+  <ol>
+    <li>Click the download button above</li>
+    <li>Open Chrome and go to <code>chrome://extensions</code></li>
+    <li>Enable "Developer mode" (toggle in top right)</li>
+    <li>Drag and drop the downloaded CRX file onto the page</li>
+  </ol>
+
+  <h2>Source Code</h2>
+  <p><a href="https://github.com/georgezlei/focus-mode-extension">View on GitHub</a></p>
+</body>
+</html>

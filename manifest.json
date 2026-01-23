@@ -3,7 +3,7 @@
   "name": "Focus Mode for Google Workspace",
   "version": "1.0.0",
   "description": "Hides web image search options in Google Docs, Sheets, and Slides to help maintain focus and reduce distractions.",
-  "update_url": "https://raw.githubusercontent.com/georgezlei/focus-mode-extension/main/updates.xml",
+  "update_url": "https://georgezlei.github.io/focus-mode-extension/updates.xml",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
