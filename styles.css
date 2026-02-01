@@ -3,3 +3,30 @@
 .goog-menuitem[aria-label*="search the web" i] {
   display: none !important;
 }
+
+/* Photopea Gallery Hiding Rules */
+.photopea-gallery-button,
+[title*="Gallery" i],
+[aria-label*="Gallery" i] {
+  display: none !important;
+}
+
+/* Specific selectors for Photopea's gallery UI */
+.photopea-gallery-tab,
+.tab[data-tab="gallery"],
+.modal-gallery,
+.dialog-gallery {
+  display: none !important;
+}
+
+/* Handle gallery button visibility when toggled via menu */
+.photopea-gallery-button.visible {
+  display: none !important;
+}
+
+/* Ensure Window->More->Gallery menu item is always hidden */
+.menu-item[data-action="gallery"],
+.menu-item[onclick*="gallery"],
+[role="menuitem"][data-command="gallery"] {
+  display: none !important;
+}
