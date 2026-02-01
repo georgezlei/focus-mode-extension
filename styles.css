@@ -7,7 +7,8 @@
 /* Photopea Gallery Hiding Rules */
 .photopea-gallery-button,
 [title*="Gallery" i],
-[aria-label*="Gallery" i] {
+[aria-label*="Gallery" i],
+[data-tooltip*="Gallery" i] {
   display: none !important;
 }
 
@@ -27,6 +28,25 @@
 /* Ensure Window->More->Gallery menu item is always hidden */
 .menu-item[data-action="gallery"],
 .menu-item[onclick*="gallery"],
-[role="menuitem"][data-command="gallery"] {
+[role="menuitem"][data-command="gallery"],
+[role="menuitem"] span:contains("Gallery"),
+.menu-item span:contains("Gallery"),
+div[data-command="gallery"],
+div[data-action="gallery"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Specific targeting for nested menu paths */
+#window-menu [role="menuitem"] span:contains("More") ~ [role="menuitem"] span:contains("Gallery"),
+#menu-window [data-submenu] span:contains("Gallery") {
+  display: none !important;
+}
+
+/* Hide any element showing "Gallery" text directly */
+*::before:contains("Gallery"),
+*::after:contains("Gallery") {
   display: none !important;
 }

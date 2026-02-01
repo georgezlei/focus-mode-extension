@@ -159,32 +159,99 @@
     // Look for menu items that might toggle gallery
     const menuItems = document.querySelectorAll(
       '.menu-item, .menuitem, [role="menuitem"], ' +
-      '.dropdown-item, .context-menu-item'
+      '#menu-window div, #menu-window ul li, ' +  // Specific ID selectors for Window menu
+      '.dropdown-item, .context-menu-item, ' +
+      'div[class*="menu"] > div, div[class*="menu"] > ul > li, ' +
+      '[data-command*="gallery"], [data-action*="gallery"]'
     );
 
     menuItems.forEach(item => {
       const text = (item.textContent || item.innerText || '').toLowerCase();
-      const nestedPath = text.match(/window.*more.*gallery/) ||
-                        text.match(/more.*gallery/) ||
-                        (text.includes('window') && text.includes('gallery'));
+      const ariaLabel = item.getAttribute('aria-label')?.'toLowerCase();
+      const innerHTML = item.innerHTML?'toLowerCase();
 
-      if (nestedPath) {
-        // Hide the Window->More->Gallery menu item
+      // More comprehensive checks for nested path
+      const nestedPath = text.includes('gallery') && (
+        text.match(/window/)
+      );
+
+      const moreToGallery = text.includes('more') && text.includes('gallery');
+
+      if (nestedPath || moreToGallery) {
+        // Hide the item and its ancestors
         item.style.display = 'none';
-        // Keep checking children for more specific matches
-        const galleryText = item.querySelector('*');
-        if (galleryText &&
-            (galleryText.textContent.toLowerCase().includes('gallery') ||
-             galleryText.getAttribute('aria-label')?.toLowerCase().includes('gallery'))) {
+        item.style.visibility = 'hidden';
+        item.style.opacity = '0';
+
+        // Try to hide parents up to 3 levels
+        let parent = item.parentElement;
+        for (let i = 0; i < 3 && parent; i++) {
+          if (parent.querySelector) {
+            const parentText = parent.textContent?.toLowerCase();
+            if (parentText && (parentText.includes('more') || parentText.includes('window'))) {
+              parent.style.display = 'none';
+              break;
+            }
+          }
+          parent = parent.parentElement;
+        }
+      }
+
+      // Check all attributes
+      const attributes = ['data-command', 'data-action', 'data-menu', 'data-id', 'id', 'class'];
+      for (const attr of attributes) {
+        const val = item.getAttribute(attr)?.toLowerCase();
+        if (val && val.includes('gallery')) {
           item.style.display = 'none';
+          item.style.visibility = 'hidden';
+          break;
         }
       }
 
       // Simple direct gallery text check
       for (const blocked of BLOCKED_PHOTOPEA_GALLERY) {
-        if (text.trim() === blocked.toLowerCase()) {
+        if (text.trim() === blocked.toLowerCase() ||
+            ariaLabel?.trim() === blocked.toLowerCase()) {
           item.style.display = 'none';
+          item.style.visibility = 'hidden';
           break;
+        }
+      }
+    });
+  }
+
+  // Special handler for dynamic menus
+  function interceptPhotopeaGalleryToggle() {
+    // Intercept clicks on menu items
+    document.addEventListener('click', (e) => {
+      const clicked = e.target;
+      const text = (clicked.textContent || clicked.innerText || '').toLowerCase();
+
+      // Check if clicking anything gallery-related
+      if (text.includes('gallery') ||
+          clicked.getAttribute('data-command')?.toLowerCase().includes('gallery') ||
+          clicked.getAttribute('data-action')?.toLowerCase().includes('gallery')) {
+        // Prevent default behavior
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    }, true); // Use capture phase
+
+    // Intercept keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      // Common gallery shortcut patterns (e.g., F5, Ctrl+G, etc.)
+      if (e.key === 'F5' || (e.ctrlKey && e.key === 'g')) {
+        // Check if we should block this based on context
+        const activeElement = document.activeElement;
+        if (activeElement && (
+          activeElement.textContent?.toLowerCase().includes('gallery') ||
+          activeElement.className?.toLowerCase().includes('gallery') ||
+          activeElement.id?.toLowerCase().includes('gallery')
+        )) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
         }
       }
     });
@@ -198,6 +265,11 @@
     hidePhotopeaDialogGalleries();
     // Also hide any menu items that could toggle gallery display
     hidePhotopeaGalleryMenuItem();
+  }
+
+  // Initialize interceptors
+  function initializeInterceptors() {
+    interceptPhotopeaGalleryToggle();
   }
 
   // Debounce to avoid excessive processing
@@ -225,6 +297,7 @@
         subtree: true
       });
       hideBlockedElements();
+      initializeInterceptors(); // Also initialize interceptors
     } else {
       setTimeout(startObserving, 10);
     }
