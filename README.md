@@ -1,6 +1,6 @@
-# Focus Mode for Google Workspace
+# Focus Mode for Google Workspace and Photopea
 
-A Chrome extension that hides web image search options in Google Docs, Sheets, and Slides to help maintain focus and reduce distractions.
+A Chrome extension that hides web image search options in Google Docs, Sheets, Slides and Photopea gallery to help maintain focus and reduce distractions.
 
 ## What it blocks
 
@@ -9,6 +9,9 @@ A Chrome extension that hides web image search options in Google Docs, Sheets, a
 | Google Docs | Insert > Image menu | "Search the web" |
 | Google Sheets | Insert > Image dialog | "Google Images" tab |
 | Google Slides | Insert > Image menu | "Stock and web" |
+| Photopea | Sidebar button | "Gallery" |
+| Photopea | CSS/Other dialogs | "Gallery" tabs |
+| Photopea | Window > More > Gallery menu | "Gallery" option |
 
 ## Installation
 
