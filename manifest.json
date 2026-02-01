@@ -14,7 +14,8 @@
       "matches": [
         "https://docs.google.com/*",
         "https://sheets.google.com/*",
-        "https://slides.google.com/*"
+        "https://slides.google.com/*",
+        "https://www.photopea.com/*"
       ],
       "js": ["content.js"],
       "css": ["styles.css"],
