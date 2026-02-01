@@ -12,6 +12,13 @@
     'google images'
   ];
 
+  // Text patterns to hide Photopea gallery elements (case-insensitive)
+  const BLOCKED_PHOTOPEA_GALLERY = [
+    'gallery',
+    'free photos',
+    'stock photos'
+  ];
+
   // Hide menu items that match blocked patterns
   function hideBlockedMenuItems() {
     const menuItems = document.querySelectorAll('.goog-menuitem');
