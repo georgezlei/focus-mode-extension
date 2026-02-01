@@ -84,10 +84,120 @@
     });
   }
 
+  // Hide Photopea gallery button in sidebar and handle menu toggling
+  function hidePhotopeaGalleryButton() {
+    // Enhanced selector to catch gallery button even when toggled via Window->More->Gallery
+    const gallerySelectors = [
+      'button', 'div[onclick]', 'img[src*="gallery"]', 'a[href*="gallery"]',
+      '[title*="Gallery" i]', '[aria-label*="Gallery" i]',
+      '[data-tooltip*="Gallery" i]', '.gallery-button', '.gallery-icon',
+      '*[class*="gallery" i]', '*[id*="gallery" i]'
+    ];
+
+    const galleryButtons = document.querySelectorAll(gallerySelectors.join(', '));
+
+    galleryButtons.forEach(button => {
+      // Check various properties that might contain gallery text
+      const text = (button.textContent || button.title || button.alt || button.innerText || '').toLowerCase();
+      const ariaLabel = button.getAttribute('aria-label') || '';
+      const onclick = button.getAttribute('onclick') || '';
+      const href = button.getAttribute('href') || '';
+      const dataTooltip = button.getAttribute('data-tooltip') || '';
+      const className = button.className || '';
+      const id = button.id || '';
+
+      for (const blocked of BLOCKED_PHOTOPEA_GALLERY) {
+        const blockedLower = blocked.toLowerCase();
+        if (text.includes(blockedLower) ||
+            ariaLabel.toLowerCase().includes(blockedLower) ||
+            onclick.toLowerCase().includes(blockedLower) ||
+            href.toLowerCase().includes(blockedLower) ||
+            dataTooltip.toLowerCase().includes(blockedLower) ||
+            className.toLowerCase().includes(blockedLower) ||
+            id.toLowerCase().includes(blockedLower)) {
+          button.style.display = 'none';
+          // Also hide parent container if it's a button wrapper
+          const parent = button.closest('*[class*="button"], *[role="button"]');
+          if (parent && parent !== button) {
+            parent.style.display = 'none';
+          }
+          break;
+        }
+      }
+    });
+  }
+
+  // Hide gallery tab in CSS/other dialogs
+  function hidePhotopeaDialogGalleries() {
+    // Look for dialog tabs and content
+    const dialogElements = document.querySelectorAll(
+      '.dialog, .modal, [role="dialog"], ' +
+      '.tab, [role="tab"], ' +
+      '.tab-content, .dialog-content'
+    );
+
+    dialogElements.forEach(element => {
+      const text = element.textContent.toLowerCase().trim();
+
+      for (const blocked of BLOCKED_PHOTOPEA_GALLERY) {
+        if (text.includes(blocked.toLowerCase())) {
+          // Hide the tab or content
+          element.style.display = 'none';
+          // Also try to hide parent tab container
+          const parent = element.closest('.tab, [role="tab"], .tablist');
+          if (parent) {
+            parent.style.display = 'none';
+          }
+          break;
+        }
+      }
+    });
+  }
+
+  // Additional function to handle Window->More->Gallery menu item
+  function hidePhotopeaGalleryMenuItem() {
+    // Look for menu items that might toggle gallery
+    const menuItems = document.querySelectorAll(
+      '.menu-item, .menuitem, [role="menuitem"], ' +
+      '.dropdown-item, .context-menu-item'
+    );
+
+    menuItems.forEach(item => {
+      const text = (item.textContent || item.innerText || '').toLowerCase();
+      const nestedPath = text.match(/window.*more.*gallery/) ||
+                        text.match(/more.*gallery/) ||
+                        (text.includes('window') && text.includes('gallery'));
+
+      if (nestedPath) {
+        // Hide the Window->More->Gallery menu item
+        item.style.display = 'none';
+        // Keep checking children for more specific matches
+        const galleryText = item.querySelector('*');
+        if (galleryText &&
+            (galleryText.textContent.toLowerCase().includes('gallery') ||
+             galleryText.getAttribute('aria-label')?.toLowerCase().includes('gallery'))) {
+          item.style.display = 'none';
+        }
+      }
+
+      // Simple direct gallery text check
+      for (const blocked of BLOCKED_PHOTOPEA_GALLERY) {
+        if (text.trim() === blocked.toLowerCase()) {
+          item.style.display = 'none';
+          break;
+        }
+      }
+    });
+  }
+
   // Combined hide function
   function hideBlockedElements() {
     hideBlockedMenuItems();
     hideBlockedPickerTabs();
+    hidePhotopeaGalleryButton();
+    hidePhotopeaDialogGalleries();
+    // Also hide any menu items that could toggle gallery display
+    hidePhotopeaGalleryMenuItem();
   }
 
   // Debounce to avoid excessive processing
