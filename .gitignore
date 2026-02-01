@@ -5,4 +5,7 @@ key.pem
 .DS_Store
 
 # Build artifacts kept in releases
+
+# Worktree directories
+.worktrees/
 *.zip
