@@ -15,7 +15,8 @@
         "https://docs.google.com/*",
         "https://sheets.google.com/*",
         "https://slides.google.com/*",
-        "https://www.photopea.com/*"
+        "https://www.photopea.com/*",
+        "https://www.vectorpea.com/*"
       ],
       "js": ["content.js"],
       "css": ["styles.css"],
