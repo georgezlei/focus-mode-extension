@@ -2,8 +2,7 @@
   "manifest_version": 3,
   "name": "Focus Mode for Google Workspace",
   "version": "1.1.0",
-  "description": "Hides web image search options in Google Docs, Sheets, and Slides to help maintain focus and reduce distractions.",
-  "update_url": "https://www.lei.nz/focus-mode-extension/updates.xml",
+  "description": "Hides web image search and gallery options in Google Docs, Sheets, Slides, Photopea, and Vectorpea to help maintain focus.",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
