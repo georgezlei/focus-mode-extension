@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Focus Mode for Google Workspace",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Hides web image search and gallery options in Google Docs, Sheets, Slides, Photopea, and Vectorpea to help maintain focus.",
   "icons": {
     "16": "icons/icon16.png",

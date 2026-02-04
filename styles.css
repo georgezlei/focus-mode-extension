@@ -4,6 +4,13 @@
   display: none !important;
 }
 
+/* Hide "Stock and web" toolbar button in Google Slides sidebar */
+#content-library-rail-stock-media-element,
+[aria-label="Stock and web"],
+[data-tooltip="Stock and web"] {
+  display: none !important;
+}
+
 /* Photopea Gallery Hiding Rules */
 .photopea-gallery-button,
 [title*="Gallery" i],

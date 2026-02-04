@@ -17,6 +17,11 @@
     'gallery'
   ];
 
+  // Toolbar buttons to hide by aria-label (Google Slides sidebar)
+  const BLOCKED_TOOLBAR_BUTTONS = [
+    'stock and web'
+  ];
+
   // Regular selectors for Google apps menu items
   function hideBlockedMenuItems() {
     const menuItems = document.querySelectorAll('.goog-menuitem');
@@ -94,11 +99,22 @@
     });
   }
 
+  // Hide toolbar buttons by aria-label (Google Slides sidebar)
+  function hideBlockedToolbarButtons() {
+    BLOCKED_TOOLBAR_BUTTONS.forEach(label => {
+      const button = document.querySelector(`[aria-label="${label}" i]`);
+      if (button) {
+        button.style.display = 'none';
+      }
+    });
+  }
+
   // Combined hide function
   function hideBlockedElements() {
     hideBlockedMenuItems();
     hideBlockedPickerTabs();
     hidePhotopeaGalleryMenu();
+    hideBlockedToolbarButtons();
   }
 
   // Debounce to avoid excessive processing
